@@ -1,22 +1,24 @@
 import { CaseStudy, Testimonial, Service, Inquiry, AgencySettings, ScannedSite, Backlink } from '../types';
 
 export const initialAgencySettings: AgencySettings = {
-  agencyName: "Nakshatra Digital Arts",
+  agencyName: "Nakshatra Digital Solutions",
   tagline: "Get Your Business Online in Just 15 Days 🚀",
-  description: "Professional, hassle-free website development, social media marketing, and portfolio management with zero hidden costs. Complete custom & mobile-ready designs, basic SEO, Generative Engine Optimization (GEO), 1 year free tech support, and easy admin dashboards with PDF & Excel reports.",
+  description: "Professional, hassle-free website development, social media marketing, and portfolio management with zero hidden costs. Complete custom & mobile-ready designs, basic SEO, Generative Engine Optimization (GEO), 6 months free tech support, and easy admin dashboards with PDF & Excel reports.",
   currencySymbol: "₹",
   contactEmail: "nakshatradigitial@gmail.com",
   contactPhone: "+91 70203 23182",
-  address: "Nakshatra Digital Complex, Silicon Valley Drive, Tech Park",
+  address: "Nakshatra Digital Solutions",
   whatsappNumber: "917020323182",
   yearsInBusiness: 5,
   completedProjects: 140,
   happyClients: 128,
   androidAppsPublished: 35,
   heroTitle: "We Build High-Converting Web Platforms & Android Apps in 15 Days",
-  heroSubtitle: "Zero hassle, full mobile-ready responsive designs, basic SEO, 1 year free support, and easy PDF/Excel admin dashboards with only 25% advance.",
+  heroSubtitle: "Zero hassle, full mobile-ready responsive designs, basic SEO, 6 months free support, and easy PDF/Excel admin dashboards with only 25% advance.",
+  heroImageUrl: "https://images.unsplash.com/photo-1534972195531-d756b9bfa9f2?auto=format&fit=crop&w=800&q=80",
+  heroImageFit: "cover",
   servicesTitle: "Our Services & Transparent Pricing",
-  servicesSubtitle: "Flat-rate, transparent packages with 15-day delivery targets, 25% advance, and 1 year free tech support warranty.",
+  servicesSubtitle: "Flat-rate, transparent packages with 15-day delivery targets, 25% advance, and 6 months free tech support warranty.",
   processTitle: "Our 15-Day Go-Live Methodology",
   processSubtitle: "A transparent, 5-phase process engineered to get your business online in 15 days or less — with only 25% advance and zero hidden costs.",
   testimonialsTitle: "What Our Clients Say About Us",
@@ -25,7 +27,7 @@ export const initialAgencySettings: AgencySettings = {
   contactSubtitle: "Fill out the project scope estimator below or send us an email. We typically respond with a detailed project proposal within 24 hours.",
   socialLinks: {
     github: "https://github.com/nakshatradigital",
-    linkedin: "https://linkedin.com/company/nakshatra-digital-arts",
+    linkedin: "https://linkedin.com/company/nakshatra-digital-solutions",
     twitter: "https://twitter.com/nakshatradigital",
     instagram: "https://instagram.com/nakshatradigital",
     dribbble: "https://dribbble.com/nakshatradigital",
@@ -34,28 +36,53 @@ export const initialAgencySettings: AgencySettings = {
     playstore: "https://play.google.com/store/apps"
   },
   adminPin: "1234",
-  whatsappTemplate: "Hello Nakshatra Digital Arts! I would like to enquire about getting my business website or mobile app online in 15 days.",
+  whatsappTemplate: "Hello Nakshatra Digital Solutions! I would like to enquire about getting my business website or mobile app online in 15 days.",
   enabledSections: {
     services: true,
     portfolio: true,
-    testimonials: true,
+    testimonials: false,
     process: true,
-    backlinks: true,
+    backlinks: false,
     contact: true
   },
   enabledSocialLinks: {
-    github: true,
+    github: false,
     linkedin: true,
-    twitter: true,
+    twitter: false,
     instagram: true,
-    dribbble: true,
-    behance: true,
-    youtube: true,
-    playstore: true
+    dribbble: false,
+    behance: false,
+    youtube: false,
+    playstore: false
   }
 };
 
 export const initialCaseStudies: CaseStudy[] = [
+  {
+    id: "cs-scrapdukaan",
+    title: "ScrapDukaan - Doorstep Scrap Recycling & Trading Platform",
+    slug: "scrapdukaan-recycling-platform",
+    client: "ScrapDukaan",
+    category: "Full Stack",
+    shortSummary: "Digital scrap collection and eco-trading web platform enabling doorstep scrap pickup scheduling, live scrap rate charts, and instant digital payouts.",
+    challenge: "ScrapDukaan needed a modern, user-friendly digital platform to connect households and industrial clients with doorstep scrap collection, offering transparent daily rate cards and seamless booking.",
+    solution: "Engineered a high-performance responsive web platform with interactive rate calculators, real-time pickup request workflows, address geo-tagging, and instant WhatsApp inquiry routing.",
+    results: [
+      "10,000+ Doorstep scrap pickup requests processed",
+      "Live at https://scrapdukaan.com",
+      "4.9/5.0 Customer satisfaction rating across household & commercial clients",
+      "Delivered turnkey in under 15 days by Nakshatra Digital Solutions"
+    ],
+    techStack: ["React 19", "TypeScript", "Tailwind CSS", "Node.js", "Express", "Vite"],
+    thumbnailUrl: "https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&w=800&q=80",
+    heroImageUrl: "https://images.unsplash.com/photo-1611284446314-60a58ac0deb9?auto=format&fit=crop&w=1200&q=80",
+    liveUrl: "https://scrapdukaan.com",
+    featured: true,
+    completionDate: "July 2026",
+    duration: "2 Weeks",
+    rating: 5,
+    testimonialSnippet: "Nakshatra Digital Solutions delivered scrapdukaan.com ahead of schedule. The online pickup booking and rate transparency transformed our business."
+  },
   {
     id: "cs-1",
     title: "HealthTrack Pro - Native Android Fitness Companion",
@@ -91,7 +118,7 @@ export const initialCaseStudies: CaseStudy[] = [
     challenge: "Nova Pay required a high-security cross-platform solution to let merchants accept payments, view real-time analytics, and send micro-transfers with biometric authentication.",
     solution: "Built a unified React/TypeScript web app alongside an Android app using Jetpack Security, biometric prompt, and encrypted WebSockets for instant transaction notifications.",
     results: [
-      "$14M+ processed in first 90 days after launch",
+      "₹14 Cr+ processed in first 90 days after launch",
       "99.99% system uptime maintained across peaks",
       "Sub-200ms latency for real-time wallet updates",
       "Zero security compliance vulnerabilities during external audit"
@@ -186,6 +213,19 @@ export const initialCaseStudies: CaseStudy[] = [
 
 export const initialTestimonials: Testimonial[] = [
   {
+    id: "t-scrapdukaan",
+    clientName: "ScrapDukaan Team",
+    clientRole: "Founding Team",
+    company: "ScrapDukaan",
+    avatarUrl: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=200&q=80",
+    rating: 5,
+    content: "Nakshatra Digital Solutions delivered scrapdukaan.com in record time. The doorstep pickup booking interface, live rate chart, and mobile-friendly design transformed our customer acquisition!",
+    projectId: "cs-scrapdukaan",
+    projectName: "ScrapDukaan Platform",
+    featured: true,
+    date: "July 2026"
+  },
+  {
     id: "t-1",
     clientName: "David Sterling",
     clientRole: "VP of Product",
@@ -243,18 +283,18 @@ export const initialServices: Service[] = [
   {
     id: "srv-1",
     title: "15-Day Express Business Website",
-    category: "15-Day Guaranteed",
-    description: "Get your business fully online in 15 days or less. Custom & mobile-ready design, free domain name, high-speed hosting, SSL security, basic SEO, and social integration included.",
+    category: "15-Day ",
+    description: "Get your business fully online in 15 days or less. Custom & mobile-ready design,  high-speed hosting, SSL security, basic SEO, and social integration included.",
     iconName: "Zap",
     features: [
-      "<= 15 Days Go Live Target Guaranteed",
+      "<= 15 Days Go Live Target ",
       "Custom & Mobile-Ready Design (Phones, Tablets, Desktops)",
-      "Free Domain Name, High-Speed Hosting & SSL Security",
+      "Exclusive of Domain Name, High-Speed Hosting & SSL Security",
       "Basic SEO Setup for Google Ranking & Social Cards",
-      "1 Year Free Tech Support (Backups, Bug Fixes, Security)",
+      "6 Months Free Tech Support (Backups, Bug Fixes, Security)",
       "Only 25% Advance — Balance Payable Upon Go Live"
     ],
-    startingPrice: "₹29,999",
+    startingPrice: "₹15,999",
     deliveryTime: "Under 15 Days",
     popular: true
   },
@@ -269,10 +309,10 @@ export const initialServices: Service[] = [
       "Built-in PDF & EXCEL Report Generator for Sales & Analytics",
       "Mobile-Optimized Admin Interface",
       "Basic SEO & Social Media Integration",
-      "1 Year Free Managed Backups & Tech Support",
+      "6 Months Free Managed Backups & Tech Support",
       "25% Advance Flexible Payment Model"
     ],
-    startingPrice: "₹49,999",
+    startingPrice: "₹24,999",
     deliveryTime: "12 - 15 Days",
     popular: true
   },
@@ -288,10 +328,10 @@ export const initialServices: Service[] = [
       "Excel & PDF Sales Export for Inventory & Orders",
       "Free High-Speed Hosting, SSL & Domain Registration",
       "Free Security Scan for Vulnerabilities with Detailed Report",
-      "1 Year Free Tech Support & Bug Warranty"
+      "6 Months Free Tech Support & Bug Warranty"
     ],
-    startingPrice: "₹64,999",
-    deliveryTime: "Under 15 Days",
+    startingPrice: "₹49,999",
+    deliveryTime: "Under 45 Days",
     popular: false
   },
   {
@@ -342,7 +382,7 @@ export const initialServices: Service[] = [
       "PDF Case Study Generator for Client Pitches",
       "Light & Dark Theme Responsive Showcase",
       "SEO & GEO Structured Schema for Project Showcase",
-      "1 Year Free Hosting & Maintenance Support"
+      "6 Months Free Hosting & Maintenance Support"
     ],
     startingPrice: "₹34,999",
     deliveryTime: "7 - 10 Days",
@@ -357,9 +397,9 @@ export const initialInquiries: Inquiry[] = [
     email: "rachel@starlighthealth.com",
     phone: "+1 (555) 948-2011",
     serviceType: "Android App Development",
-    budgetRange: "$5,000 - $10,000",
+    budgetRange: "₹50,000 - ₹1,00,000",
     timeline: "1 - 2 Months",
-    message: "Hi Apex team! We are looking to develop a native Android mobile app for patient appointment scheduling and telehealth video consultations.",
+    message: "Hi Nakshatra team! We are looking to develop a native Android mobile app for patient appointment scheduling and telehealth video consultations.",
     status: "New",
     submittedAt: "2026-08-09 14:32",
     notes: "High priority lead. Reached out via web form."
@@ -370,7 +410,7 @@ export const initialInquiries: Inquiry[] = [
     email: "arthur@pendeltonlaw.com",
     phone: "+1 (555) 231-8970",
     serviceType: "Web Design & UI/UX Systems",
-    budgetRange: "$3,000 - $5,000",
+    budgetRange: "₹25,000 - ₹50,000",
     timeline: "2 - 4 Weeks",
     message: "We need a complete redesign of our law firm's web portal with online client case tracking and appointment booking.",
     status: "In Contact",

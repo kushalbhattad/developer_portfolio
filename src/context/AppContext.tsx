@@ -106,11 +106,33 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [selectedCaseStudy, setSelectedCaseStudy] = useState<CaseStudy | null>(null);
   const [selectedEstimateService, setSelectedEstimateService] = useState<string | null>(null);
   const [toasts, setToasts] = useState<Toast[]>([]);
-  const [themeMode, setThemeMode] = useState<'dark' | 'light'>('dark');
+  const [themeMode, setThemeMode] = useState<'dark' | 'light'>(() => {
+    try {
+      const savedTheme = localStorage.getItem('apex_studio_theme_mode');
+      if (savedTheme === 'dark' || savedTheme === 'light') return savedTheme;
+    } catch {
+      // ignore
+    }
+    return 'light'; // Default Studio Off-White theme
+  });
 
   const toggleThemeMode = () => {
     setThemeMode(prev => (prev === 'dark' ? 'light' : 'dark'));
   };
+
+  // Sync theme class on document.documentElement
+  useEffect(() => {
+    try {
+      localStorage.setItem('apex_studio_theme_mode', themeMode);
+    } catch {
+      // ignore
+    }
+    if (themeMode === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [themeMode]);
 
   // Load state from localStorage on mount
   useEffect(() => {

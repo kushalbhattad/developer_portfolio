@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { motion } from 'motion/react';
 import { useApp } from '../context/AppContext';
+import { BrandLogo } from './BrandLogo';
 import {
   Globe,
   Layout,
@@ -13,15 +14,42 @@ import {
   Building2,
   CheckCircle2,
   Leaf,
-  Sparkles
+  Sparkles,
+  Camera,
+  Upload,
+  Maximize2,
+  Minimize2
 } from 'lucide-react';
 import { SecurityScannerModal } from './SecurityScannerModal';
 import { SocialLinksBar } from './SocialLinksBar';
 import { NerdProgrammerAvatar } from './NerdProgrammerAvatar';
 
 export const Hero: React.FC = () => {
-  const { agencySettings } = useApp();
+  const { agencySettings, updateAgencySettings, addToast, isAdmin } = useApp();
   const [showScannerModal, setShowScannerModal] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+
+  const handleImageFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (file.size > 10 * 1024 * 1024) {
+      addToast('Image size should be less than 10MB', 'error');
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const dataUrl = event.target?.result as string;
+      if (dataUrl) {
+        updateAgencySettings({
+          heroImageUrl: dataUrl
+        });
+        addToast('Hero home page image updated successfully!', 'success');
+      }
+    };
+    reader.readAsDataURL(file);
+  };
 
   return (
     <motion.div
@@ -43,15 +71,16 @@ export const Hero: React.FC = () => {
             transition={{ duration: 0.6, delay: 0.1 }}
           >
             
-            {/* Eyebrow */}
-            <div className="inline-flex items-center gap-2">
-              <span className="text-xs font-extrabold text-[#2e5441] tracking-wider uppercase font-mono">
-                WEB DESIGN & DEVELOPMENT STUDIO
+            {/* Eyebrow Badge */}
+            <div className="inline-flex items-center gap-2.5 px-3 py-1.5 rounded-full bg-white/90 dark:bg-slate-800/80 border border-[#111111]/15 dark:border-slate-700 shadow-sm">
+              <BrandLogo size="xs" variant="icon-only" />
+              <span className="text-xs font-extrabold text-[#2e5441] dark:text-emerald-400 tracking-wider uppercase font-mono">
+                OFFICIAL DIGITAL DEVELOPMENT STUDIO
               </span>
             </div>
 
             {/* Main Title */}
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-[#111111] leading-[1.06] tracking-tight">
+            <h1 id="hero-heading" className="text-4xl sm:text-5xl lg:text-6xl font-black text-[#111111] leading-[1.06] tracking-tight">
               {agencySettings.heroTitle || 'Digital experiences designed to feel effortless.'}
             </h1>
 
@@ -62,8 +91,10 @@ export const Hero: React.FC = () => {
 
             {/* CTA Buttons Row */}
             <div className="flex flex-wrap items-center gap-4 pt-2">
-              <button
-                onClick={() => {
+              <a
+                href="#portfolio"
+                onClick={(e) => {
+                  e.preventDefault();
                   const el = document.getElementById('portfolio');
                   if (el) el.scrollIntoView({ behavior: 'smooth' });
                 }}
@@ -71,20 +102,22 @@ export const Hero: React.FC = () => {
               >
                 <span>VIEW OUR WORK</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </button>
+              </a>
 
-              <button
-                onClick={() => {
+              <a
+                href="#process"
+                onClick={(e) => {
+                  e.preventDefault();
                   const el = document.getElementById('process');
                   if (el) el.scrollIntoView({ behavior: 'smooth' });
                 }}
                 className="text-[#2e5441] hover:text-[#111111] font-bold text-xs uppercase tracking-wider underline underline-offset-4 transition-colors"
               >
                 DISCOVER OUR PROCESS
-              </button>
+              </a>
             </div>
 
-            {/* Guarantees & Quick WhatsApp / Security Scanner */}
+            {/*  & Quick WhatsApp / Security Scanner */}
             <div className="pt-4 border-t border-[#111111]/10 flex flex-wrap items-center gap-3">
               <a
                 href={`https://wa.me/${agencySettings.whatsappNumber}?text=Hi%20${encodeURIComponent(agencySettings.agencyName)},%20I%20want%20to%20get%20my%20business%20online%20in%2015%20days!`}
@@ -109,20 +142,66 @@ export const Hero: React.FC = () => {
 
           {/* Center Column: Mint Arched Frame with Animated Nerd Programmer Boy Avatar */}
           <motion.div
-            className="lg:col-span-4 flex justify-center relative my-4 lg:my-0"
+            className="lg:col-span-4 flex justify-center relative my-4 lg:my-0 group"
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
             <div className="relative w-full max-w-[340px] aspect-[4/5]">
+              {/* Hidden File Input */}
+              <input
+                type="file"
+                ref={fileInputRef}
+                onChange={handleImageFileChange}
+                accept="image/*"
+                className="hidden"
+              />
+
               {/* Arched Mint Frame */}
-              <div className="w-full h-full bg-[#dbe7de] rounded-t-[160px] rounded-b-3xl overflow-hidden relative shadow-inner border border-[#111111]/5 flex items-end justify-center">
-                <NerdProgrammerAvatar />
+              <div className="w-full h-full bg-[#dbe7de] dark:bg-slate-800 rounded-t-[160px] rounded-b-3xl overflow-hidden relative shadow-inner border border-[#111111]/5 flex items-end justify-center">
+                <NerdProgrammerAvatar
+                  customImageUrl={agencySettings.heroImageUrl}
+                  imageFit={agencySettings.heroImageFit || 'cover'}
+                />
               </div>
 
               {/* Decorative Coral Circle Ornament */}
               <div className="w-12 h-12 rounded-full bg-[#ff5436] absolute top-6 -right-2 shadow-lg flex items-center justify-center animate-pulse z-20">
                 <Sparkles className="w-5 h-5 text-white" />
+              </div>
+
+              {/* Quick Image Upload & Fit Mode Controls */}
+              <div className="absolute top-4 left-4 z-30 flex items-center gap-1.5">
+                <button
+                  onClick={() => fileInputRef.current?.click()}
+                  className="px-3 py-1.5 rounded-xl bg-white/95 dark:bg-slate-900/90 text-[#111111] dark:text-white border border-[#111111]/15 dark:border-slate-700 text-[10px] font-mono font-bold uppercase tracking-wider shadow-lg hover:bg-[#ff5436] hover:text-white dark:hover:bg-[#ff5436] transition-all flex items-center gap-1.5"
+                  title="Click to Upload / Change Home Page Image"
+                >
+                  <Camera className="w-3.5 h-3.5" />
+                  <span>Upload Image</span>
+                </button>
+
+                <button
+                  onClick={() => {
+                    const nextFit = agencySettings.heroImageFit === 'contain' ? 'cover' : 'contain';
+                    updateAgencySettings({ heroImageFit: nextFit });
+                    addToast(`Switched image fit to ${nextFit}`, 'info');
+                  }}
+                  className="px-2.5 py-1.5 rounded-xl bg-white/95 dark:bg-slate-900/90 text-[#111111] dark:text-white border border-[#111111]/15 dark:border-slate-700 text-[10px] font-mono font-bold uppercase tracking-wider shadow-lg hover:bg-emerald-600 hover:text-white transition-all flex items-center gap-1"
+                  title="Toggle between Object-Cover and Object-Contain fit"
+                >
+                  {agencySettings.heroImageFit === 'contain' ? (
+                    <>
+                      <Maximize2 className="w-3.5 h-3.5 text-emerald-500" />
+                      <span className="hidden sm:inline">Cover</span>
+                    </>
+                  ) : (
+                    <>
+                      <Minimize2 className="w-3.5 h-3.5 text-indigo-500" />
+                      <span className="hidden sm:inline">Contain</span>
+                    </>
+                  )}
+                </button>
               </div>
             </div>
           </motion.div>

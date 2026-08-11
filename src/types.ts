@@ -20,6 +20,7 @@ export interface CaseStudy {
   duration: string;
   rating?: number;
   testimonialSnippet?: string;
+  enabled?: boolean;
 }
 
 export interface Testimonial {
@@ -87,6 +88,8 @@ export interface AgencySettings {
   // Page Editable Headings & Copy
   heroTitle?: string;
   heroSubtitle?: string;
+  heroImageUrl?: string;
+  heroImageFit?: 'cover' | 'contain';
   servicesTitle?: string;
   servicesSubtitle?: string;
   processTitle?: string;

@@ -1,6 +1,6 @@
 import jsPDF from 'jspdf';
 import * as XLSX from 'xlsx';
-import { Inquiry, CaseStudy, Service } from '../types';
+import { Inquiry, CaseStudy, Service, AgencySettings } from '../types';
 
 /**
  * Export Inquiries / Leads to Excel (.xlsx) file
@@ -34,27 +34,39 @@ export function exportInquiriesToExcel(inquiries: Inquiry[], fileName = 'nakshat
 /**
  * Export Inquiries / Leads to PDF Summary Report
  */
-export function exportInquiriesToPDF(inquiries: Inquiry[], fileName = 'nakshatra_leads_report.pdf') {
+export function exportInquiriesToPDF(
+  inquiries: Inquiry[],
+  agencySettings?: AgencySettings,
+  fileName = 'nakshatra_leads_report.pdf'
+) {
   const doc = new jsPDF();
+  const agencyName = agencySettings?.agencyName || 'NAKSHATRA DIGITAL SOLUTIONS';
+  const phone = agencySettings?.contactPhone || '+91 70203 23182';
+  const email = agencySettings?.contactEmail || 'nakshatradigitial@gmail.com';
+  const tagline = agencySettings?.tagline || 'Get Your Business Online in 15 Days';
 
   // Header Banner
   doc.setFillColor(15, 23, 42); // slate-900
-  doc.rect(0, 0, 210, 35, 'F');
+  doc.rect(0, 0, 210, 38, 'F');
 
   doc.setTextColor(255, 255, 255);
   doc.setFont('helvetica', 'bold');
-  doc.setFontSize(20);
-  doc.text('NAKSHATRA DIGITAL ARTS', 14, 18);
+  doc.setFontSize(18);
+  doc.text(agencyName.toUpperCase(), 14, 16);
 
-  doc.setFontSize(10);
+  doc.setFontSize(9.5);
   doc.setFont('helvetica', 'normal');
   doc.setTextColor(16, 185, 129); // emerald-500
-  doc.text('Client Leads & Project Inquiries Report', 14, 27);
+  doc.text('Client Leads & Project Inquiries Report', 14, 24);
 
-  doc.setTextColor(100, 116, 139);
-  doc.text(`Generated on: ${new Date().toLocaleDateString()}`, 140, 27);
+  doc.setTextColor(203, 213, 225);
+  doc.setFontSize(8.5);
+  doc.text(`Contact: ${phone} | Email: ${email}`, 14, 32);
 
-  let y = 45;
+  doc.setTextColor(148, 163, 184);
+  doc.text(`Generated on: ${new Date().toLocaleDateString()}`, 140, 32);
+
+  let y = 48;
 
   inquiries.forEach((inq, index) => {
     if (y > 250) {
@@ -87,7 +99,7 @@ export function exportInquiriesToPDF(inquiries: Inquiry[], fileName = 'nakshatra
   // Footer
   doc.setFontSize(8);
   doc.setTextColor(148, 163, 184);
-  doc.text('Nakshatra Digital Arts — Get Your Business Online in 15 Days 🚀 | Zero Hidden Costs', 14, 285);
+  doc.text(`${agencyName} — ${tagline} 🚀 | Phone: ${phone} | Email: ${email}`, 14, 285);
 
   doc.save(fileName);
 }
@@ -95,25 +107,39 @@ export function exportInquiriesToPDF(inquiries: Inquiry[], fileName = 'nakshatra
 /**
  * Export Security Audit Scan to PDF
  */
-export function exportSecurityScanToPDF(targetUrl: string, results: { score: number; checks: { name: string; status: string; detail: string }[] }) {
+export function exportSecurityScanToPDF(
+  targetUrl: string,
+  results: { score: number; checks: { name: string; status: string; detail: string }[] },
+  agencySettings?: AgencySettings
+) {
   const doc = new jsPDF();
+  const agencyName = agencySettings?.agencyName || 'NAKSHATRA DIGITAL SOLUTIONS';
+  const phone = agencySettings?.contactPhone || '+91 70203 23182';
+  const email = agencySettings?.contactEmail || 'nakshatradigitial@gmail.com';
+  const rawWhatsapp = agencySettings?.whatsappNumber || '917020323182';
+  const cleanWhatsapp = rawWhatsapp.replace(/[^0-9]/g, '');
 
   // Header Banner
   doc.setFillColor(15, 23, 42);
-  doc.rect(0, 0, 210, 40, 'F');
+  doc.rect(0, 0, 210, 42, 'F');
 
   doc.setTextColor(255, 255, 255);
   doc.setFont('helvetica', 'bold');
-  doc.setFontSize(22);
-  doc.text('NAKSHATRA DIGITAL ARTS', 14, 18);
+  doc.setFontSize(18);
+  doc.text(agencyName.toUpperCase(), 14, 16);
 
-  doc.setFontSize(11);
+  doc.setFontSize(10);
   doc.setTextColor(56, 189, 248); // sky-400
-  doc.text('FREE WEBSITE SECURITY & FLAW AUDIT REPORT', 14, 28);
+  doc.text('FREE WEBSITE SECURITY & FLAW AUDIT REPORT', 14, 25);
 
-  doc.setFontSize(9);
+  doc.setFontSize(8.5);
+  doc.setTextColor(203, 213, 225); // slate-300
+  doc.text(`Phone: ${phone} | Email: ${email} | WhatsApp: +${cleanWhatsapp}`, 14, 34);
+
+  doc.setFontSize(8);
   doc.setTextColor(148, 163, 184);
-  doc.text(`Audited URL: ${targetUrl} | Date: ${new Date().toLocaleDateString()}`, 14, 35);
+  doc.text(`Target URL: ${targetUrl}`, 130, 25);
+  doc.text(`Audited Date: ${new Date().toLocaleDateString()}`, 130, 34);
 
   // Score Box
   doc.setFillColor(241, 245, 249);
@@ -129,8 +155,8 @@ export function exportSecurityScanToPDF(targetUrl: string, results: { score: num
   doc.setTextColor(71, 85, 105);
   doc.text(
     results.score >= 80
-      ? 'Status: GOOD — Minor optimizations recommended.'
-      : 'Status: ATTENTION NEEDED — Flaws detected in security headers, mobile speed, or SSL.',
+      ? 'Status: EXCELLENT / GOOD — High-performance & secure configuration verified.'
+      : 'Status: ATTENTION NEEDED — Flaws detected in security headers, mobile speed, or assets.',
     22,
     68
   );
@@ -161,21 +187,22 @@ export function exportSecurityScanToPDF(targetUrl: string, results: { score: num
     y += 26;
   });
 
-  // Call to action
-  y += 10;
+  // Call to action box
+  y += 8;
   doc.setFillColor(15, 23, 42);
-  doc.roundedRect(14, y, 182, 35, 4, 4, 'F');
+  doc.roundedRect(14, y, 182, 38, 4, 4, 'F');
 
   doc.setTextColor(255, 255, 255);
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(11);
-  doc.text('Upgrade to a 100% Secure, Mobile-Ready Website in 15 Days!', 22, y + 12);
+  doc.text(`Upgrade to a 100% Secure, Mobile-Ready Website with ${agencyName}!`, 22, y + 12);
 
   doc.setFontSize(9);
   doc.setFont('helvetica', 'normal');
   doc.setTextColor(203, 213, 225);
-  doc.text('Nakshatra Digital Arts handles Domain, Hosting, SSL & Security Flaw fixes with zero hidden costs.', 22, y + 20);
-  doc.text('DM us or WhatsApp +91 98765 43210 (Only 25% Advance, Pay balance on Go-Live)', 22, y + 27);
+  doc.text(`${agencyName} handles Domain, Hosting, SSL & Security Flaw fixes with zero hidden costs.`, 22, y + 20);
+  doc.text(`Call/WhatsApp: ${phone} | Email: ${email}`, 22, y + 27);
+  doc.text(`Only 25% Advance — Pay balance on final Go-Live after 100% satisfaction!`, 22, y + 33);
 
   doc.save(`security_scan_${targetUrl.replace(/[^a-zA-Z0-9]/g, '_')}.pdf`);
 }

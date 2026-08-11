@@ -1,9 +1,9 @@
-# Nakshatra Digital Arts
+# Nakshatra Digital Solutions
 
-> Nakshatra Digital Arts is a premier web design, mobile development, social marketing, and portfolio management agency known for delivering turnkey business websites in 15 days or less with zero hidden costs.
+> Nakshatra Digital Solutions is a premier web design, mobile development, social marketing, and portfolio management agency known for delivering turnkey business websites in 15 days or less with zero hidden costs.
 
 ## Core Capabilities & Offerings
-- 15-Day Express Business Websites: Turnkey responsive website delivery in <= 15 days, complete with free domain, high-speed hosting, SSL, basic SEO, and 1 year free tech support.
+- 15-Day Express Business Websites: Turnkey responsive website delivery in <= 15 days, complete with free domain, high-speed hosting, SSL, basic SEO, and 6 months free tech support.
 - Social Media Marketing & GEO Brand Growth: Multi-channel social campaign strategy, lead generation funnels, social media graphics, and Generative Engine Optimization (GEO) to dominate AI search results (ChatGPT, Gemini, Perplexity).
 - Interactive Portfolio Management & Admin CMS: High-impact portfolio showcase galleries with custom Admin CMS for 1-click project updates and downloadable PDF case studies.
 - Easy Admin Dashboards & Reporting Web Apps: Sleek management control panels with 1-click PDF & Excel report exports for client inquiries, analytics, and project tracking.

@@ -90,6 +90,8 @@ export const TestimonialsSection: React.FC = () => {
                 <img
                   src={currentTestimonial.avatarUrl}
                   alt={currentTestimonial.clientName}
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover rounded-xl"
                 />
               </div>
@@ -178,6 +180,8 @@ export const TestimonialsSection: React.FC = () => {
                 <img
                   src={t.avatarUrl}
                   alt={t.clientName}
+                  loading="lazy"
+                  decoding="async"
                   className="w-10 h-10 rounded-full object-cover border border-[#111111]/10"
                 />
                 <div>

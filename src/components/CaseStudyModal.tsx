@@ -36,6 +36,8 @@ export const CaseStudyModal: React.FC = () => {
           <img
             src={cs.heroImageUrl || cs.thumbnailUrl}
             alt={cs.title}
+            loading="lazy"
+            decoding="async"
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#111111] via-[#111111]/60 to-transparent p-6 sm:p-8 flex flex-col justify-end">

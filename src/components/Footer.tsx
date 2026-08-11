@@ -1,5 +1,6 @@
 import React from 'react';
 import { useApp } from '../context/AppContext';
+import { BrandLogo } from './BrandLogo';
 import {
   Lock,
   ArrowUp,
@@ -24,13 +25,8 @@ export const Footer: React.FC = () => {
           
           {/* Col 1: Agency Brand & Social Handles */}
           <div className="lg:col-span-2 space-y-4">
-            <div>
-              <span className="text-xl font-extrabold tracking-tight uppercase font-mono text-white">
-                {agencySettings.agencyName}
-              </span>
-              <p className="text-xs text-[#2e5441] font-semibold mt-0.5">
-                Web Design & Mobile Development Studio
-              </p>
+            <div className="bg-white/5 border border-white/10 p-4 rounded-2xl backdrop-blur-sm inline-block">
+              <BrandLogo size="lg" />
             </div>
 
             <p className="text-xs text-slate-400 leading-relaxed max-w-sm">
@@ -51,72 +47,84 @@ export const Footer: React.FC = () => {
             <p className="text-xs font-bold text-white uppercase font-mono tracking-wider">Navigation</p>
             <ul className="space-y-2 text-xs">
               <li>
-                <button
-                  onClick={() => {
+                <a
+                  href="#home"
+                  onClick={(e) => {
+                    e.preventDefault();
                     setActiveTab('home');
                     document.getElementById('home')?.scrollIntoView({ behavior: 'smooth' });
                   }}
                   className="text-slate-400 hover:text-white transition-colors"
                 >
                   Home Overview
-                </button>
+                </a>
               </li>
               {agencySettings.enabledSections?.services !== false && (
                 <li>
-                  <button
-                    onClick={() => {
+                  <a
+                    href="#services"
+                    onClick={(e) => {
+                      e.preventDefault();
                       setActiveTab('home');
                       document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' });
                     }}
                     className="text-slate-400 hover:text-white transition-colors"
                   >
                     Services
-                  </button>
+                  </a>
                 </li>
               )}
               {agencySettings.enabledSections?.portfolio !== false && (
                 <li>
-                  <button
-                    onClick={() => {
+                  <a
+                    href="#portfolio"
+                    onClick={(e) => {
+                      e.preventDefault();
                       setActiveTab('home');
                       document.getElementById('portfolio')?.scrollIntoView({ behavior: 'smooth' });
                     }}
                     className="text-slate-400 hover:text-white transition-colors"
                   >
                     Our Projects
-                  </button>
+                  </a>
                 </li>
               )}
               {agencySettings.enabledSections?.testimonials !== false && (
                 <li>
-                  <button
-                    onClick={() => {
+                  <a
+                    href="#testimonials"
+                    onClick={(e) => {
+                      e.preventDefault();
                       setActiveTab('home');
                       document.getElementById('testimonials')?.scrollIntoView({ behavior: 'smooth' });
                     }}
                     className="text-slate-400 hover:text-white transition-colors"
                   >
                     Client Testimonials
-                  </button>
+                  </a>
                 </li>
               )}
               {agencySettings.enabledSections?.process !== false && (
                 <li>
-                  <button
-                    onClick={() => {
+                  <a
+                    href="#process"
+                    onClick={(e) => {
+                      e.preventDefault();
                       setActiveTab('home');
                       document.getElementById('process')?.scrollIntoView({ behavior: 'smooth' });
                     }}
                     className="text-slate-400 hover:text-white transition-colors"
                   >
                     Our Process
-                  </button>
+                  </a>
                 </li>
               )}
               {agencySettings.enabledSections?.backlinks !== false && (
                 <li>
-                  <button
-                    onClick={() => {
+                  <a
+                    href="#backlinks"
+                    onClick={(e) => {
+                      e.preventDefault();
                       setActiveTab('home');
                       document.getElementById('backlinks')?.scrollIntoView({ behavior: 'smooth' });
                     }}
@@ -124,20 +132,22 @@ export const Footer: React.FC = () => {
                   >
                     <span>SEO Backlinks Network</span>
                     <span className="px-1.5 py-0.2 rounded bg-[#ff5436]/20 text-[#ff5436] text-[9px] font-mono font-bold">DA 90+</span>
-                  </button>
+                  </a>
                 </li>
               )}
               {agencySettings.enabledSections?.contact !== false && (
                 <li>
-                  <button
-                    onClick={() => {
+                  <a
+                    href="#contact"
+                    onClick={(e) => {
+                      e.preventDefault();
                       setActiveTab('home');
                       document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
                     }}
                     className="text-slate-400 hover:text-white transition-colors"
                   >
                     Project Estimator & Quote
-                  </button>
+                  </a>
                 </li>
               )}
             </ul>

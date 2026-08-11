@@ -30,9 +30,11 @@ export const AdminSettings: React.FC = () => {
 
   // Page Headings
   const [heroTitle, setHeroTitle] = useState(agencySettings.heroTitle || 'We Build High-Converting Web Platforms & Android Apps in 15 Days');
-  const [heroSubtitle, setHeroSubtitle] = useState(agencySettings.heroSubtitle || 'Zero hassle, full mobile-ready responsive designs, basic SEO, 1 year free support, and easy PDF/Excel admin dashboards with only 25% advance.');
+  const [heroSubtitle, setHeroSubtitle] = useState(agencySettings.heroSubtitle || 'Zero hassle, full mobile-ready responsive designs, basic SEO, 6 months free support, and easy PDF/Excel admin dashboards with only 25% advance.');
+  const [heroImageUrl, setHeroImageUrl] = useState(agencySettings.heroImageUrl || 'https://images.unsplash.com/photo-1534972195531-d756b9bfa9f2?auto=format&fit=crop&w=800&q=80');
+  const [heroImageFit, setHeroImageFit] = useState<'cover' | 'contain'>(agencySettings.heroImageFit || 'cover');
   const [servicesTitle, setServicesTitle] = useState(agencySettings.servicesTitle || 'Our Services & Transparent Pricing');
-  const [servicesSubtitle, setServicesSubtitle] = useState(agencySettings.servicesSubtitle || 'Flat-rate, transparent packages with 15-day delivery targets, 25% advance, and 1 year free tech support warranty.');
+  const [servicesSubtitle, setServicesSubtitle] = useState(agencySettings.servicesSubtitle || 'Flat-rate, transparent packages with 15-day delivery targets, 25% advance, and 6 months free tech support warranty.');
   const [processTitle, setProcessTitle] = useState(agencySettings.processTitle || 'Our 15-Day Go-Live Methodology');
   const [processSubtitle, setProcessSubtitle] = useState(agencySettings.processSubtitle || 'A transparent, 5-phase process engineered to get your business online in 15 days or less — with only 25% advance and zero hidden costs.');
   const [testimonialsTitle, setTestimonialsTitle] = useState(agencySettings.testimonialsTitle || 'What Our Clients Say About Us');
@@ -50,7 +52,7 @@ export const AdminSettings: React.FC = () => {
     agencySettings.enabledSections || {
       services: true,
       portfolio: true,
-      testimonials: true,
+      testimonials: false,
       process: true,
       backlinks: true,
       contact: true
@@ -60,14 +62,14 @@ export const AdminSettings: React.FC = () => {
   // Enable / Disable Social Media Links State
   const [enabledSocialLinks, setEnabledSocialLinks] = useState<Record<string, boolean>>(
     agencySettings.enabledSocialLinks || {
-      github: true,
+      github: false,
       linkedin: true,
-      twitter: true,
+      twitter: false,
       instagram: true,
-      dribbble: true,
-      behance: true,
-      youtube: true,
-      playstore: true
+      dribbble: false,
+      behance: false,
+      youtube: false,
+      playstore: false
     }
   );
 
@@ -99,6 +101,8 @@ export const AdminSettings: React.FC = () => {
       adminPin: pin,
       heroTitle,
       heroSubtitle,
+      heroImageUrl,
+      heroImageFit,
       servicesTitle,
       servicesSubtitle,
       processTitle,
@@ -181,7 +185,7 @@ export const AdminSettings: React.FC = () => {
             />
           </div>
           <div className="space-y-1">
-            <label className="text-xs text-slate-400 font-mono">Currency Symbol (e.g. ₹ or $)</label>
+            <label className="text-xs text-slate-400 font-mono">Currency Symbol (e.g. ₹)</label>
             <input
               type="text"
               required
@@ -230,6 +234,49 @@ export const AdminSettings: React.FC = () => {
                   onChange={e => setHeroSubtitle(e.target.value)}
                   className="w-full px-3.5 py-2 rounded-lg bg-slate-900 border border-slate-800 text-white text-xs"
                 />
+              </div>
+              <div>
+                <label className="text-[11px] text-slate-400 block mb-1">Home Page Hero Image (URL or Local Upload)</label>
+                <div className="flex items-center gap-2">
+                  <input
+                    type="text"
+                    value={heroImageUrl}
+                    onChange={e => setHeroImageUrl(e.target.value)}
+                    placeholder="https://... or upload local image"
+                    className="w-full px-3.5 py-2 rounded-lg bg-slate-900 border border-slate-800 text-white text-xs font-mono"
+                  />
+                  <label className="px-3 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold shrink-0 cursor-pointer transition-colors flex items-center gap-1.5">
+                    <Upload className="w-3.5 h-3.5" />
+                    <span>Upload</span>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      onChange={e => {
+                        const file = e.target.files?.[0];
+                        if (file) {
+                          const reader = new FileReader();
+                          reader.onload = (event) => {
+                            const result = event.target?.result as string;
+                            if (result) setHeroImageUrl(result);
+                          };
+                          reader.readAsDataURL(file);
+                        }
+                      }}
+                    />
+                  </label>
+                </div>
+              </div>
+              <div>
+                <label className="text-[11px] text-slate-400 block mb-1">Image Display Fit Mode</label>
+                <select
+                  value={heroImageFit}
+                  onChange={e => setHeroImageFit(e.target.value as 'cover' | 'contain')}
+                  className="w-full px-3.5 py-2 rounded-lg bg-slate-900 border border-slate-800 text-white text-xs"
+                >
+                  <option value="cover">Object Cover (Fills Frame &amp; Crop Edges)</option>
+                  <option value="contain">Object Contain (Fit Full Image Without Cropping)</option>
+                </select>
               </div>
             </div>
           </div>

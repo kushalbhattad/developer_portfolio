@@ -5,7 +5,7 @@ import { Inbox, Trash2, Mail, Phone, Calendar, Check, MessageSquare, StickyNote,
 import { exportInquiriesToExcel, exportInquiriesToPDF } from '../../lib/reportExporter';
 
 export const AdminInquiries: React.FC = () => {
-  const { inquiries, updateInquiryStatus, deleteInquiry } = useApp();
+  const { inquiries, agencySettings, updateInquiryStatus, deleteInquiry } = useApp();
   const [selectedInquiry, setSelectedInquiry] = useState<Inquiry | null>(inquiries[0] || null);
   const [noteInput, setNoteInput] = useState('');
 
@@ -51,7 +51,7 @@ export const AdminInquiries: React.FC = () => {
           </button>
 
           <button
-            onClick={() => exportInquiriesToPDF(inquiries)}
+            onClick={() => exportInquiriesToPDF(inquiries, agencySettings)}
             className="px-3.5 py-2 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 border border-indigo-500/30 text-xs font-semibold flex items-center gap-1.5 transition-colors"
             title="Export Inquiries Report to PDF"
           >

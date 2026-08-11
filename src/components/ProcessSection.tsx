@@ -45,10 +45,10 @@ export const ProcessSection: React.FC = () => {
     },
     {
       number: "Day 14-15",
-      title: "Client Review, Go Live & 1 Year Support",
+      title: "Client Review, Go Live & 6 Months Support",
       icon: <Rocket className="w-6 h-6 text-[#ff5436]" />,
-      description: "You review the completed live preview. Once 100% satisfied, your site goes official, you pay the remaining 75% balance, and your 1 year free tech support begins!",
-      deliverables: ["100% Live Website Launch", "Admin Dashboard Walkthrough", "1 Year Free Tech Support Warranty"]
+      description: "You review the completed live preview. Once 100% satisfied, your site goes official, you pay the remaining 75% balance, and your 6 months free tech support begins!",
+      deliverables: ["100% Live Website Launch", "Admin Dashboard Walkthrough", "6 Months Free Tech Support Warranty"]
     }
   ];
 
@@ -67,7 +67,7 @@ export const ProcessSection: React.FC = () => {
         <div className="text-center max-w-3xl mx-auto space-y-4 mb-16">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#dbe7de] border border-[#2e5441]/20 text-[#2e5441] text-xs font-extrabold uppercase font-mono tracking-wider">
             <Rocket className="w-3.5 h-3.5 text-[#2e5441]" />
-            <span>Guaranteed Fast Turnaround</span>
+            <span>Fast Turnaround</span>
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#111111] tracking-tight">
             {agencySettings.processTitle || 'Our 15-Day Go-Live Methodology'}
@@ -80,16 +80,16 @@ export const ProcessSection: React.FC = () => {
         {/* Steps List */}
         <div className="space-y-8 relative max-w-4xl mx-auto">
           {/* Vertical Connecting Line */}
-          <div className="absolute left-6 top-8 bottom-8 w-0.5 bg-gradient-to-b from-[#2e5441] via-[#ff5436] to-[#2e5441] hidden sm:block opacity-30"></div>
+          <div className="absolute left-10 sm:left-12 top-8 bottom-8 w-0.5 bg-gradient-to-b from-[#2e5441] via-[#ff5436] to-[#2e5441] hidden sm:block opacity-30"></div>
 
           {steps.map((step, idx) => (
             <div
               key={idx}
               className="relative rounded-3xl bg-white border border-[#111111]/10 p-6 sm:p-8 transition-all duration-300 flex flex-col sm:flex-row items-start gap-6 group hover:border-[#ff5436]/40 shadow-sm hover:shadow-md"
             >
-              {/* Step Number Circle */}
-              <div className="w-12 h-12 rounded-2xl bg-[#dbe7de] border border-[#2e5441]/20 flex items-center justify-center shrink-0 z-10 shadow-sm">
-                <span className="font-mono font-bold text-xs text-[#2e5441]">{step.number}</span>
+              {/* Step Number Badge Box */}
+              <div className="px-4 py-3 min-w-[5.5rem] sm:min-w-[7rem] h-12 sm:h-14 rounded-2xl bg-[#dbe7de] border border-[#2e5441]/30 flex items-center justify-center shrink-0 z-10 shadow-sm">
+                <span className="font-mono font-black text-xs sm:text-sm text-[#2e5441] tracking-tight whitespace-nowrap">{step.number}</span>
               </div>
 
               {/* Step Body */}

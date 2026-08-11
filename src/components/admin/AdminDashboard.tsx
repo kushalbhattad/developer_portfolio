@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useApp } from '../../context/AppContext';
 import { AdminSubTab } from '../../types';
+import { BrandLogo } from '../BrandLogo';
 import {
   FolderKanban,
   Star,
@@ -98,14 +99,13 @@ export const AdminDashboard: React.FC = () => {
             >
               <ArrowLeft className="w-4 h-4" />
             </button>
-            <div>
-              <h1 className="text-lg font-bold flex items-center gap-2">
-                <span>{agencySettings.agencyName} Control Portal</span>
+            <div className="flex items-center gap-3">
+              <BrandLogo size="md" />
+              <div className="hidden sm:block pl-2 border-l border-slate-700/50">
                 <span className="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 text-[10px] font-mono font-bold border border-emerald-500/30">
-                  LIVE
+                  ADMIN PORTAL
                 </span>
-              </h1>
-              <p className={`text-xs ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>Connected Admin Session</p>
+              </div>
             </div>
           </div>
 

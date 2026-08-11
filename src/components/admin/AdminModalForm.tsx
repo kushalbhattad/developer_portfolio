@@ -34,6 +34,7 @@ export const AdminModalForm: React.FC<AdminModalFormProps> = ({ type, itemToEdit
   const [csLiveUrl, setCsLiveUrl] = useState((itemToEdit as CaseStudy)?.liveUrl || '');
   const [csAppStoreUrl, setCsAppStoreUrl] = useState((itemToEdit as CaseStudy)?.appStoreUrl || '');
   const [csFeatured, setCsFeatured] = useState((itemToEdit as CaseStudy)?.featured ?? true);
+  const [csEnabled, setCsEnabled] = useState((itemToEdit as CaseStudy)?.enabled ?? true);
   const [csDuration, setCsDuration] = useState((itemToEdit as CaseStudy)?.duration || '6 Weeks');
 
   // Testimonial State
@@ -50,7 +51,7 @@ export const AdminModalForm: React.FC<AdminModalFormProps> = ({ type, itemToEdit
   const [sCategory, setSCategory] = useState<Service['category']>((itemToEdit as Service)?.category || 'Android');
   const [sDesc, setSDesc] = useState((itemToEdit as Service)?.description || '');
   const [sIcon, setSIcon] = useState((itemToEdit as Service)?.iconName || 'Smartphone');
-  const [sPrice, setSPrice] = useState((itemToEdit as Service)?.startingPrice || '$3,000');
+  const [sPrice, setSPrice] = useState((itemToEdit as Service)?.startingPrice || '₹29,999');
   const [sDelivery, setSDelivery] = useState((itemToEdit as Service)?.deliveryTime || '4 Weeks');
   const [sFeatures, setSFeatures] = useState<string[]>((itemToEdit as Service)?.features || ['Custom Feature 1', 'Custom Feature 2']);
   const [sPopular, setSPopular] = useState((itemToEdit as Service)?.popular ?? false);
@@ -77,6 +78,7 @@ export const AdminModalForm: React.FC<AdminModalFormProps> = ({ type, itemToEdit
         liveUrl: csLiveUrl || undefined,
         appStoreUrl: csAppStoreUrl || undefined,
         featured: csFeatured,
+        enabled: csEnabled,
         completionDate: 'Current',
         duration: csDuration,
         rating: 5
@@ -335,17 +337,32 @@ export const AdminModalForm: React.FC<AdminModalFormProps> = ({ type, itemToEdit
                 </div>
               </div>
 
-              <div className="flex items-center gap-2 pt-2">
-                <input
-                  type="checkbox"
-                  id="csFeatured"
-                  checked={csFeatured}
-                  onChange={e => setCsFeatured(e.target.checked)}
-                  className="w-4 h-4 rounded bg-slate-950 border-slate-800 text-indigo-600"
-                />
-                <label htmlFor="csFeatured" className="text-xs text-slate-300 font-semibold">
-                  Feature prominently on homepage
-                </label>
+              <div className="flex flex-wrap items-center gap-6 pt-2">
+                <div className="flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    id="csEnabled"
+                    checked={csEnabled}
+                    onChange={e => setCsEnabled(e.target.checked)}
+                    className="w-4 h-4 rounded bg-slate-950 border-slate-800 text-emerald-500 focus:ring-emerald-500"
+                  />
+                  <label htmlFor="csEnabled" className="text-xs text-emerald-300 font-semibold cursor-pointer">
+                    Enable & Show on Public Showcase
+                  </label>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    id="csFeatured"
+                    checked={csFeatured}
+                    onChange={e => setCsFeatured(e.target.checked)}
+                    className="w-4 h-4 rounded bg-slate-950 border-slate-800 text-indigo-600 focus:ring-indigo-500"
+                  />
+                  <label htmlFor="csFeatured" className="text-xs text-amber-300 font-semibold cursor-pointer">
+                    Feature prominently on homepage
+                  </label>
+                </div>
               </div>
             </>
           )}

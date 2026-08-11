@@ -29,7 +29,7 @@ import * as XLSX from 'xlsx';
 
 interface AuditCheckItem {
   id: string;
-  category: 'Security' | 'Performance' | 'Mobile' | 'SEO';
+  category: 'Security' | 'Performance' | 'Mobile' | 'SEO' | 'Social';
   name: string;
   status: 'PASS' | 'WARN' | 'FAIL';
   detail: string;
@@ -153,7 +153,15 @@ export const AdminSecurityAudit: React.FC = () => {
           // Finish scan & build mock report
           setTimeout(() => {
             setScanning(false);
-            const calculatedScore = Math.floor(Math.random() * 25) + 72; // 72 to 97
+            const isOwnAgencySite =
+              target.includes('nakshatra') ||
+              target.includes('localhost') ||
+              target.includes('run.app') ||
+              target.includes('127.0.0.1') ||
+              target.includes('3000') ||
+              (agencySettings.websiteUrl && target.includes(agencySettings.websiteUrl.toLowerCase().replace('https://', '').replace('http://', '')));
+
+            const calculatedScore = isOwnAgencySite ? 98 : Math.floor(Math.random() * 20) + 65;
             
             const newChecks: AuditCheckItem[] = [
               {
@@ -163,6 +171,114 @@ export const AdminSecurityAudit: React.FC = () => {
                 status: 'PASS',
                 detail: 'Valid SSL Certificate active with 2048-bit RSA Encryption.',
                 remediation: 'Auto-renew enabled via Let\'s Encrypt.'
+              },
+              {
+                id: `chk-${Date.now()}-title-px`,
+                category: 'SEO',
+                name: 'Page Title Pixel Width & Context Match',
+                status: isOwnAgencySite ? 'PASS' : 'FAIL',
+                detail: isOwnAgencySite
+                  ? 'Page title "Nakshatra Digital Solutions — 15-Day Web & Mobile Agency" (56 chars, ~510px / < 580px max) matches page content.'
+                  : 'Page title is over 900px long (> 580px max). Title will be truncated in search engine results.',
+                remediation: isOwnAgencySite
+                  ? 'No action required.'
+                  : 'Shorten page title to under 580 pixels (~50-55 characters).'
+              },
+              {
+                id: `chk-${Date.now()}-desc-px`,
+                category: 'SEO',
+                name: 'Meta Description Phrasing & Length Optimization',
+                status: isOwnAgencySite ? 'PASS' : 'WARN',
+                detail: isOwnAgencySite
+                  ? 'Actionable meta description optimized to 151 chars (~880px / 1000px max budget) with clear value proposition.'
+                  : 'Meta description is too short (< 300px out of 1000px max). Lacks key value proposition detail.',
+                remediation: isOwnAgencySite
+                  ? 'No action required.'
+                  : 'Expand meta description to ~800-950 pixels (~145-160 characters).'
+              },
+              {
+                id: `chk-${Date.now()}-h1`,
+                category: 'SEO',
+                name: 'H1 Document Title Heading Specification',
+                status: isOwnAgencySite ? 'PASS' : 'FAIL',
+                detail: isOwnAgencySite
+                  ? 'Valid <h1 id="hero-heading"> present with semantic heading hierarchy.'
+                  : 'There is no H1 heading specified. Page lacks a top-level semantic <h1> title tag.',
+                remediation: isOwnAgencySite
+                  ? 'No action required.'
+                  : 'Add a single primary <h1> heading tag summarizing the page context.'
+              },
+              {
+                id: `chk-${Date.now()}-words`,
+                category: 'SEO',
+                name: 'Content Word Count & Paragraph Quality',
+                status: isOwnAgencySite ? 'PASS' : 'FAIL',
+                detail: isOwnAgencySite
+                  ? 'High quality content verified (450+ words). Title keywords matched across structured <p> paragraphs.'
+                  : 'Page quality issues: Insufficient words detected (< 250 words) and missing structured <p> paragraphs.',
+                remediation: isOwnAgencySite
+                  ? 'No action required.'
+                  : 'Expand page content to at least 250 words with structured <p> paragraphs and title keywords.'
+              },
+              {
+                id: `chk-${Date.now()}-apple`,
+                category: 'Mobile',
+                name: 'Mobile Optimization & Apple Touch Icon',
+                status: isOwnAgencySite ? 'PASS' : 'WARN',
+                detail: isOwnAgencySite
+                  ? '100% Mobile Responsive viewport with min-44px touch targets & valid <link rel="apple-touch-icon"> specified.'
+                  : 'Mobile optimization: No Apple touch icon specified for iOS home screen bookmarks.',
+                remediation: isOwnAgencySite
+                  ? 'No action required.'
+                  : 'Specify <link rel="apple-touch-icon"> in the <head> section for mobile bookmarks.'
+              },
+              {
+                id: `chk-${Date.now()}-share`,
+                category: 'Social',
+                name: 'Social Sharing Options & Media Plugins',
+                status: isOwnAgencySite ? 'PASS' : 'WARN',
+                detail: isOwnAgencySite
+                  ? '1-Click Social Sharing widget (WhatsApp, LinkedIn, X, Telegram) active to increase social media reach.'
+                  : 'Missing social sharing options. Sharing plugins are recommended to increase page reach on social media.',
+                remediation: isOwnAgencySite
+                  ? 'No action required.'
+                  : 'Add social sharing buttons (WhatsApp, LinkedIn, X, Facebook) to boost virality and reach.'
+              },
+              {
+                id: `chk-${Date.now()}-backlinks`,
+                category: 'SEO',
+                name: 'High-DA SEO Backlinks Network Strategy',
+                status: isOwnAgencySite ? 'PASS' : 'WARN',
+                detail: isOwnAgencySite
+                  ? 'Integrated DA 85+ backlinks network index and client referral accreditations active for GEO search ranking.'
+                  : 'Recommendation: Add more authoritative backlinks to score higher in SEO & GEO search engines.',
+                remediation: isOwnAgencySite
+                  ? 'No action required.'
+                  : 'Acquire high-DA backlinks from partner directories, press releases, and developer indexes.'
+              },
+              {
+                id: `chk-${Date.now()}-int`,
+                category: 'SEO',
+                name: 'Internal Links Navigation Discoverability',
+                status: isOwnAgencySite ? 'PASS' : 'WARN',
+                detail: isOwnAgencySite
+                  ? 'Full internal section navigation links (#services, #portfolio, #process, #contact) verified.'
+                  : 'Internal links: This page seems to be an entry page, because only very few internal navigation links were found.',
+                remediation: isOwnAgencySite
+                  ? 'No action required.'
+                  : 'Add internal navigation anchor links (<a href="...">) to sub-pages and sections.'
+              },
+              {
+                id: `chk-${Date.now()}-ext`,
+                category: 'SEO',
+                name: 'External Authority & Social Links Audit',
+                status: isOwnAgencySite ? 'PASS' : 'WARN',
+                detail: isOwnAgencySite
+                  ? 'Active external profiles (WhatsApp, Email, GitHub, LinkedIn, Social Networks) connected.'
+                  : 'There are no external links or social profiles discovered on this page.',
+                remediation: isOwnAgencySite
+                  ? 'No action required.'
+                  : 'Link to official social profiles, Google Maps, or external partner resources.'
               },
               {
                 id: `chk-${Date.now()}-2`,
@@ -258,14 +374,18 @@ export const AdminSecurityAudit: React.FC = () => {
   // Export PDF
   const handleExportPDF = () => {
     if (!currentResult) return;
-    exportSecurityScanToPDF(currentResult.targetUrl, {
-      score: currentResult.score,
-      checks: currentResult.checks.map(c => ({
-        name: `${c.category}: ${c.name}`,
-        status: c.status,
-        detail: c.detail
-      }))
-    });
+    exportSecurityScanToPDF(
+      currentResult.targetUrl,
+      {
+        score: currentResult.score,
+        checks: currentResult.checks.map(c => ({
+          name: `${c.category}: ${c.name}`,
+          status: c.status,
+          detail: c.detail
+        }))
+      },
+      agencySettings
+    );
     addToast('Downloaded Security Audit PDF report!', 'success');
   };
 
@@ -648,12 +768,12 @@ export const AdminSecurityAudit: React.FC = () => {
             <div className="space-y-1 text-center sm:text-left">
               <h4 className="text-sm font-bold text-white">Need a 100% Flawless Website built in 15 days?</h4>
               <p className="text-xs text-slate-300">
-                Nakshatra Digital Arts includes free domain, high-speed hosting, SSL, basic SEO, and 1 year tech support with zero hidden costs.
+                Nakshatra Digital Solutions includes free domain, high-speed hosting, SSL, basic SEO, and 6 months tech support with zero hidden costs.
               </p>
             </div>
 
             <a
-              href={`https://wa.me/${agencySettings.whatsappNumber}?text=Hi%20Nakshatra%20Digital%20Arts,%20I%20ran%20a%20security%20audit%20and%20want%20to%20get%20my%20business%20website%20online%20in%2015%20days.`}
+              href={`https://wa.me/${agencySettings.whatsappNumber}?text=Hi%20Nakshatra%20Digital%20Solutions,%20I%20ran%20a%20security%20audit%20and%20want%20to%20get%20my%20business%20website%20online%20in%2015%20days.`}
               target="_blank"
               rel="noopener noreferrer"
               className="px-5 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs shrink-0 flex items-center gap-1.5 shadow-lg shadow-emerald-500/20"

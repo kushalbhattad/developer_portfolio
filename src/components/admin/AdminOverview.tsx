@@ -22,6 +22,7 @@ export const AdminOverview: React.FC = () => {
     testimonials,
     services,
     inquiries,
+    agencySettings,
     setAdminSubTab,
     updateInquiryStatus
   } = useApp();
@@ -36,7 +37,7 @@ export const AdminOverview: React.FC = () => {
         <div className="space-y-1">
           <h2 className="text-xl font-bold text-white flex items-center gap-2">
             <Sparkles className="w-5 h-5 text-amber-400" />
-            <span>Nakshatra Digital Arts — Easy Admin Dashboard</span>
+            <span>Nakshatra Digital Solutions — Easy Admin Dashboard</span>
           </h2>
           <p className="text-xs text-slate-300">
             Manage your website content, review client inquiries, and generate downloadable PDF & Excel reports with zero hassle.
@@ -53,7 +54,7 @@ export const AdminOverview: React.FC = () => {
           </button>
 
           <button
-            onClick={() => exportInquiriesToPDF(inquiries)}
+            onClick={() => exportInquiriesToPDF(inquiries, agencySettings)}
             className="px-3.5 py-2.5 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 border border-indigo-500/30 text-xs font-semibold flex items-center gap-1.5 transition-colors"
           >
             <Download className="w-4 h-4 text-indigo-400" />

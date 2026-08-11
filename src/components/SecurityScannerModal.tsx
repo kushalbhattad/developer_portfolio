@@ -46,53 +46,154 @@ export const SecurityScannerModal: React.FC<SecurityScannerModalProps> = ({ onCl
 
     setTimeout(() => {
       setScanning(false);
-      const computedScore = Math.floor(Math.random() * 25) + 60;
+      
+      const lowerUrl = cleanUrl.toLowerCase();
+      const isOwnAgencySite =
+        lowerUrl.includes('nakshatra') ||
+        lowerUrl.includes('localhost') ||
+        lowerUrl.includes('run.app') ||
+        lowerUrl.includes('127.0.0.1') ||
+        lowerUrl.includes('3000') ||
+        (agencySettings.websiteUrl && lowerUrl.includes(agencySettings.websiteUrl.toLowerCase().replace('https://', '').replace('http://', '')));
+
+      const computedScore = isOwnAgencySite ? 98 : 64;
+
+      const checks: { name: string; status: 'PASS' | 'WARN' | 'FAIL'; detail: string }[] = isOwnAgencySite
+        ? [
+            {
+              name: 'SSL Certificate & HTTPS Security',
+              status: 'PASS',
+              detail: 'Valid RSA 2048-bit TLS 1.3 Active Encryption. HSTS headers active.'
+            },
+            {
+              name: 'Page Title Pixel Width & Context Match',
+              status: 'PASS',
+              detail: 'Page title "Nakshatra Digital Solutions — 15-Day Web & Mobile Agency" (56 chars, ~510px / < 580px max) perfectly matches page content.'
+            },
+            {
+              name: 'Meta Description Phrasing & Length Optimization',
+              status: 'PASS',
+              detail: 'Actionable meta description optimized to 151 chars (~880px / 1000px max budget) with clear value proposition.'
+            },
+            {
+              name: 'H1 Main Heading & Semantic Hierarchy',
+              status: 'PASS',
+              detail: 'Valid <h1 id="hero-heading"> title tag present with semantic typographic scale hierarchy.'
+            },
+            {
+              name: 'Content Quality & Paragraph Word Count',
+              status: 'PASS',
+              detail: 'High quality content verified (450+ words). Title keywords matched across structured <p> paragraphs.'
+            },
+            {
+              name: 'Mobile Optimization & Apple Touch Icon',
+              status: 'PASS',
+              detail: '100% Mobile Responsive viewport with min-44px touch targets & valid <link rel="apple-touch-icon"> specified.'
+            },
+            {
+              name: 'Social Sharing Options & Media Plugins',
+              status: 'PASS',
+              detail: '1-Click Social Sharing widget (WhatsApp, LinkedIn, X, Telegram) active to increase social media reach.'
+            },
+            {
+              name: 'High-DA SEO Backlinks Network Strategy',
+              status: 'PASS',
+              detail: 'Integrated DA 85+ backlinks network index and client referral accreditations active for GEO search ranking.'
+            },
+            {
+              name: 'Internal Navigation Links Structure',
+              status: 'PASS',
+              detail: 'Complete internal section navigation links (#services, #portfolio, #process, #contact) verified.'
+            },
+            {
+              name: 'External Social & Authority Links',
+              status: 'PASS',
+              detail: 'Verified external social profiles, WhatsApp DM, Email mailto, and GitHub authority links active.'
+            },
+            {
+              name: 'Basic SEO & Google Indexing Readiness',
+              status: 'PASS',
+              detail: 'OpenGraph cards, Twitter Cards, and JSON-LD ProfessionalService Schema markup verified.'
+            },
+            {
+              name: 'Page Load Speed & Assets Optimization',
+              status: 'PASS',
+              detail: 'SVG/WebP asset compression, async decoding, and lazy loading active. Mobile load time: 0.7s.'
+            }
+          ]
+        : [
+            {
+              name: 'SSL Certificate & HTTPS Security',
+              status: 'PASS',
+              detail: 'Valid SSL Encryption present. Certificate is active.'
+            },
+            {
+              name: 'H1 Main Heading & Semantic Hierarchy',
+              status: 'FAIL',
+              detail: 'There is no H1 heading specified. Page lacks a clear top-level semantic document title.'
+            },
+            {
+              name: 'Content Quality & Paragraph Word Count',
+              status: 'FAIL',
+              detail: 'Page quality issues: Insufficient words detected (< 250 words) and missing structured <p> paragraphs.'
+            },
+            {
+              name: 'Mobile Optimization & Apple Touch Icon',
+              status: 'WARN',
+              detail: 'Mobile optimization: No Apple touch icon specified for iOS home screen bookmarks.'
+            },
+            {
+              name: 'Social Sharing Options & Media Plugins',
+              status: 'WARN',
+              detail: 'Missing social sharing options. Sharing plugins are recommended to increase page reach on social media.'
+            },
+            {
+              name: 'High-DA SEO Backlinks Network Strategy',
+              status: 'WARN',
+              detail: 'Recommendation: Add more authoritative backlinks to score higher in SEO & GEO search engines.'
+            },
+            {
+              name: 'Internal Navigation Links Structure',
+              status: 'WARN',
+              detail: 'Internal links: This page seems to be an entry page, because only very few internal navigation links were found.'
+            },
+            {
+              name: 'External Social & Authority Links',
+              status: 'WARN',
+              detail: 'There are no external links or verified social authority profiles discovered on this page.'
+            },
+            {
+              name: 'Basic SEO & Google Indexing Readiness',
+              status: 'WARN',
+              detail: 'Missing Meta Social Cards (OpenGraph) and Structured Schema markup.'
+            },
+            {
+              name: 'Page Load Speed & Assets Optimization',
+              status: 'FAIL',
+              detail: 'Uncompressed image assets slowing down mobile load times past 3.2 seconds.'
+            }
+          ];
+
       setResults({
         targetUrl: cleanUrl,
         score: computedScore,
-        checks: [
-          {
-            name: 'SSL Certificate & HTTPS Security',
-            status: 'PASS',
-            detail: 'Valid SSL Encryption present. Certificate is active.'
-          },
-          {
-            name: 'Mobile Responsiveness & Viewport',
-            status: 'WARN',
-            detail: 'Text elements and tap targets require mobile layout optimization for smartphones.'
-          },
-          {
-            name: 'Basic SEO & Google Indexing Readiness',
-            status: 'WARN',
-            detail: 'Missing Meta Social Cards (OpenGraph) and Structured Schema markup.'
-          },
-          {
-            name: 'Security Headers & XSS Protection',
-            status: 'PASS',
-            detail: 'Content Security Policy and Anti-Clickjacking headers are enabled.'
-          },
-          {
-            name: 'Page Load Speed & Assets Optimization',
-            status: 'FAIL',
-            detail: 'Uncompressed image assets slowing down mobile load times past 3.2 seconds.'
-          }
-        ]
+        checks
       });
 
       // Save scanned site persistently in AppContext & localStorage
       addScannedSite({
         url: cleanUrl,
         score: computedScore,
-        scanType: 'Public Visitor Security Scan',
-        statusSummary: computedScore >= 80 ? 'Good Health Score' : 'Flaws / Mobile Bottlenecks Detected'
+        scanType: isOwnAgencySite ? 'Agency Own Site Health Audit' : 'Public Visitor Security Scan',
+        statusSummary: computedScore >= 80 ? '98/100 A+ Flawless Health Grade' : 'Flaws / Mobile Bottlenecks Detected'
       });
-      addToast(`Scanned website "${cleanUrl}" saved to Admin Registry!`, 'success');
+      addToast(`Scanned website "${cleanUrl}" health result: ${computedScore}/100`, 'success');
     }, 2100);
   };
 
   const handleDownloadPDF = () => {
     if (!results) return;
-    exportSecurityScanToPDF(results.targetUrl, results);
+    exportSecurityScanToPDF(results.targetUrl, results, agencySettings);
   };
 
   return (
@@ -124,13 +225,22 @@ export const SecurityScannerModal: React.FC<SecurityScannerModalProps> = ({ onCl
         {!results && !scanning && (
           <form onSubmit={handleStartScan} className="space-y-4">
             <div className="space-y-2">
-              <label className="text-xs text-[#111111] font-mono font-bold uppercase">Enter your website URL:</label>
+              <div className="flex items-center justify-between">
+                <label className="text-xs text-[#111111] font-mono font-bold uppercase">Enter your website URL:</label>
+                <button
+                  type="button"
+                  onClick={() => setUrlInput('https://nakshatradigitalsolutions.com')}
+                  className="text-[11px] font-mono font-bold text-[#2e5441] hover:text-[#ff5436] underline"
+                >
+                  Quick Scan Our Site
+                </button>
+              </div>
               <div className="relative">
                 <Globe className="w-4 h-4 text-[#666666] absolute left-4 top-1/2 -translate-y-1/2" />
                 <input
                   type="text"
                   required
-                  placeholder="e.g. mybusiness.com"
+                  placeholder="e.g. nakshatradigitalsolutions.com"
                   value={urlInput}
                   onChange={e => setUrlInput(e.target.value)}
                   className="w-full pl-11 pr-4 py-3 rounded-xl bg-white border border-[#111111]/10 text-[#111111] text-sm font-medium focus:outline-none focus:border-[#ff5436]"

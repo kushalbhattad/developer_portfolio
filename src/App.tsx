@@ -15,7 +15,7 @@ import { ScrollToTopButton } from './components/ScrollToTopButton';
 import { AdminDashboard } from './components/admin/AdminDashboard';
 
 function MainAppContent() {
-  const { activeTab, setActiveTab, agencySettings } = useApp();
+  const { activeTab, setActiveTab, agencySettings, themeMode } = useApp();
 
   // Detect /admin or #admin URL
   React.useEffect(() => {
@@ -38,16 +38,16 @@ function MainAppContent() {
 
   // Dynamic SEO Head Manager (Document Title, Meta Description, Meta Keywords & OpenGraph)
   React.useEffect(() => {
-    const brandName = agencySettings.agencyName || 'Nakshatra Digital Arts';
+    const brandName = agencySettings.agencyName || 'Nakshatra Digital Solutions';
     
     let title = `${brandName} — Turnkey Web & Mobile App Studio | 15-Day Delivery`;
-    let description = `${brandName} delivers high-converting business websites, mobile apps, social marketing, and portfolio management in 15 days or less with 25% advance. Free domain, SSL & 1 year tech support.`;
+    let description = `${brandName} delivers high-converting business websites, mobile apps, social marketing, and portfolio management in 15 days or less with 25% advance. Free domain, SSL & 6 months tech support.`;
     let keywords = `${brandName}, 15 day website, web design agency, mobile app development, social media marketing, portfolio management, SEO agency, website calculator`;
 
     switch (activeTab) {
       case 'services':
         title = `Services & Flat-Rate Packages — ${brandName}`;
-        description = `Explore web development, native Android app publishing, UI/UX design, and social marketing packages by ${brandName}. Delivered in 15 days with 1 year free tech support.`;
+        description = `Explore web development, native Android app publishing, UI/UX design, and social marketing packages by ${brandName}. Delivered in 15 days with 6 months free tech support.`;
         keywords = `web development services, android app publishing, ui ux design, social media marketing packages, agency pricing, 15 day website`;
         break;
       case 'portfolio':
@@ -120,9 +120,15 @@ function MainAppContent() {
   }
 
   return (
-    <div className="bg-[#0c231a] p-2 sm:p-4 lg:p-6 min-h-screen font-sans antialiased selection:bg-[#ff5436] selection:text-white">
-      {/* Studio Off-White Rounded Canvas Container */}
-      <div className="bg-[#f6f4ee] rounded-[24px] sm:rounded-[36px] overflow-hidden shadow-2xl border border-black/10 flex flex-col min-h-[94vh]">
+    <div className={`p-2 sm:p-4 lg:p-6 min-h-screen font-sans antialiased selection:bg-[#ff5436] selection:text-white transition-colors duration-300 ${
+      themeMode === 'dark' ? 'bg-[#060a08] text-slate-100' : 'bg-[#0c231a] text-[#111111]'
+    }`}>
+      {/* Canvas Container */}
+      <div className={`rounded-[24px] sm:rounded-[36px] overflow-hidden shadow-2xl border flex flex-col min-h-[94vh] transition-colors duration-300 ${
+        themeMode === 'dark'
+          ? 'bg-[#0d1613] border-white/10 text-slate-100 shadow-emerald-950/20'
+          : 'bg-[#f6f4ee] border-black/10 text-[#111111]'
+      }`}>
         <Navbar />
 
         <main className="flex-1">

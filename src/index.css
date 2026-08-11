@@ -1,1 +1,93 @@
 @import "tailwindcss";
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  html.dark {
+    color-scheme: dark;
+  }
+}
+
+/* High-Contrast Dark Mode Custom Styles */
+html.dark body {
+  background-color: #060a08;
+  color: #f8fafc;
+}
+
+html.dark .bg-\[\#f6f4ee\],
+html.dark .bg-\[\#f6f4ee\]\/90,
+html.dark .bg-\[\#f6f4ee\]\/95 {
+  background-color: #0d1613 !important;
+}
+
+html.dark .bg-\[\#0c231a\] {
+  background-color: #060a08 !important;
+}
+
+html.dark .bg-white {
+  background-color: #14211c !important;
+  color: #f8fafc !important;
+}
+
+html.dark .bg-white\/80,
+html.dark .bg-white\/90,
+html.dark .bg-white\/95 {
+  background-color: rgba(20, 33, 28, 0.9) !important;
+  color: #f8fafc !important;
+}
+
+html.dark .bg-\[\#dbe7de\] {
+  background-color: #1a2d26 !important;
+}
+
+html.dark .text-\[\#111111\],
+html.dark .text-\[\#222222\],
+html.dark .text-\[\#333333\] {
+  color: #f8fafc !important;
+}
+
+html.dark .text-\[\#444444\],
+html.dark .text-\[\#555555\] {
+  color: #cbd5e1 !important;
+}
+
+html.dark .text-\[\#2e5441\] {
+  color: #34d399 !important;
+}
+
+html.dark .border-\[\#111111\]\/10,
+html.dark .border-\[\#111111\]\/15,
+html.dark .border-\[\#111111\]\/20,
+html.dark .border-black\/10 {
+  border-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+html.dark .border-\[\#2e5441\]\/20,
+html.dark .border-\[\#2e5441\]\/30 {
+  border-color: rgba(52, 211, 153, 0.3) !important;
+}
+
+html.dark input,
+html.dark select,
+html.dark textarea {
+  background-color: #0b120f !important;
+  color: #f8fafc !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+html.dark input::placeholder,
+html.dark textarea::placeholder {
+  color: #64748b !important;
+}
+
+/* Custom scrollbar for dark mode */
+html.dark ::-webkit-scrollbar-track {
+  background: #060a08;
+}
+
+html.dark ::-webkit-scrollbar-thumb {
+  background: #1e332a;
+  border-radius: 9999px;
+}

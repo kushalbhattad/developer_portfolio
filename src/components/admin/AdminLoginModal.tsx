@@ -14,7 +14,7 @@ export const AdminLoginModal: React.FC<{ onClose: () => void }> = ({ onClose }) 
       addToast('Welcome to Agency Admin Dashboard!', 'success');
       onClose();
     } else {
-      setErrorMsg('Incorrect PIN. Default demo PIN is: 1234');
+      setErrorMsg('Incorrect Security PIN. Please try again.');
     }
   };
 
@@ -64,7 +64,7 @@ export const AdminLoginModal: React.FC<{ onClose: () => void }> = ({ onClose }) 
                   setPinInput(e.target.value);
                   setErrorMsg('');
                 }}
-                placeholder="Enter PIN (Default: 1234)"
+                placeholder="Enter Security PIN"
                 className="w-full pl-10 pr-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-white text-sm focus:outline-none focus:border-indigo-500 font-mono tracking-widest"
               />
             </div>

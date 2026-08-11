@@ -23,7 +23,8 @@ export const PortfolioSection: React.FC = () => {
     caseStudies,
     setSelectedCaseStudy,
     isAdmin,
-    deleteCaseStudy
+    deleteCaseStudy,
+    updateCaseStudy
   } = useApp();
 
   const [selectedCategory, setSelectedCategory] = useState<ProjectCategory>('All');
@@ -50,6 +51,9 @@ export const PortfolioSection: React.FC = () => {
 
   // Filter case studies
   const filteredCaseStudies = caseStudies.filter(cs => {
+    // Non-admin users only see enabled projects
+    if (!isAdmin && cs.enabled === false) return false;
+
     const matchesCategory = selectedCategory === 'All' || cs.category === selectedCategory;
     const matchesSearch =
       searchQuery.trim() === '' ||
@@ -188,6 +192,8 @@ export const PortfolioSection: React.FC = () => {
                   <img
                     src={cs.thumbnailUrl}
                     alt={cs.title}
+                    loading="lazy"
+                    decoding="async"
                     onLoad={() => setLoadedImages(prev => ({ ...prev, [cs.id]: true }))}
                     className={`w-full h-full object-cover group-hover:scale-105 transition-all duration-500 ${
                       loadedImages[cs.id] ? 'opacity-100' : 'opacity-0'
@@ -196,16 +202,23 @@ export const PortfolioSection: React.FC = () => {
                   <div className="absolute inset-0 bg-gradient-to-t from-[#111111] via-[#111111]/20 to-transparent"></div>
 
                   {/* Top Badges */}
-                  <div className="absolute top-3 left-3 right-3 flex items-center justify-between">
+                  <div className="absolute top-3 left-3 right-3 flex items-center justify-between gap-1 flex-wrap">
                     <span className="px-2.5 py-1 rounded-lg bg-white/95 text-[#111111] text-[11px] font-mono font-bold uppercase tracking-wider shadow-sm">
                       {cs.category}
                     </span>
 
-                    {cs.featured && (
-                      <span className="px-2.5 py-1 rounded-lg bg-[#ff5436] text-white text-[10px] font-extrabold tracking-wide uppercase shadow-sm">
-                        Featured
-                      </span>
-                    )}
+                    <div className="flex items-center gap-1">
+                      {cs.enabled === false && (
+                        <span className="px-2.5 py-1 rounded-lg bg-rose-600 text-white text-[10px] font-extrabold tracking-wide uppercase shadow-sm">
+                          Disabled
+                        </span>
+                      )}
+                      {cs.featured && (
+                        <span className="px-2.5 py-1 rounded-lg bg-[#ff5436] text-white text-[10px] font-extrabold tracking-wide uppercase shadow-sm">
+                          Featured
+                        </span>
+                      )}
+                    </div>
                   </div>
 
                   {/* Quick View Button on Image */}
@@ -271,6 +284,18 @@ export const PortfolioSection: React.FC = () => {
                     {/* Admin Actions */}
                     {isAdmin && (
                       <div className="flex items-center gap-1">
+                        <button
+                          onClick={() => updateCaseStudy(cs.id, { enabled: cs.enabled === false ? true : false })}
+                          className={`px-2 py-1 rounded-lg text-[10px] font-bold uppercase transition-colors ${
+                            cs.enabled !== false
+                              ? 'bg-emerald-100 text-emerald-800 hover:bg-emerald-200'
+                              : 'bg-rose-100 text-rose-800 hover:bg-rose-200'
+                          }`}
+                          title={cs.enabled !== false ? 'Click to Disable / Hide' : 'Click to Enable / Show'}
+                        >
+                          {cs.enabled !== false ? 'Visible' : 'Hidden'}
+                        </button>
+
                         <button
                           onClick={() => {
                             setEditingCaseStudy(cs);

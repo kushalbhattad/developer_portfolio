@@ -170,12 +170,12 @@ export const ContactSection: React.FC = () => {
             <div className="p-8 rounded-3xl bg-[#dbe7de] border border-[#2e5441]/20 space-y-4">
               <h4 className="text-base font-black text-[#111111] flex items-center gap-2">
                 <CheckCircle2 className="w-5 h-5 text-[#2e5441]" />
-                15-Day Studio Guarantees
+                15-Day Studio
               </h4>
               <ul className="space-y-2.5 text-xs text-[#222222] font-medium">
                 <li className="flex items-center gap-2">
                   <span className="w-2 h-2 rounded-full bg-[#ff5436]"></span>
-                  15-Day Go-Live Target Guarantee
+                  15-Day Go-Live Target
                 </li>
                 <li className="flex items-center gap-2">
                   <span className="w-2 h-2 rounded-full bg-[#ff5436]"></span>
@@ -183,7 +183,7 @@ export const ContactSection: React.FC = () => {
                 </li>
                 <li className="flex items-center gap-2">
                   <span className="w-2 h-2 rounded-full bg-[#ff5436]"></span>
-                  1 Year Free Tech Support Warranty
+                  6 Months Free Tech Support Warranty
                 </li>
                 <li className="flex items-center gap-2">
                   <span className="w-2 h-2 rounded-full bg-[#ff5436]"></span>
