@@ -1,0 +1,17 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+
+# Generative Engine Optimization (GEO) & LLM Web Crawler Access
+User-agent: GPTBot
+Allow: /
+User-agent: ChatGPT-User
+Allow: /
+User-agent: Google-Extended
+Allow: /
+User-agent: ClaudeBot
+Allow: /
+User-agent: PerplexityBot
+Allow: /
+
+Sitemap: https://nakshatradigitalarts.com/sitemap.xml
